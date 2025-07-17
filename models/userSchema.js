@@ -67,6 +67,6 @@ userSchema.pre("updateMany", function (next) {
 });
 // ---------- -------------------------------
 
-const UserModel = model("user", userSchema);
+const UserModel = model("User", userSchema);
 
 module.exports = { UserModel };

@@ -11,7 +11,6 @@ const userSignupController = async (req, res) => {
     console.log("--> inside userSignupController");
     try {
         const { email, password, otp } = req.body;
-        // check if user already exists
         const user = await UserModel.findOne({
             email: email,
         }).lean();

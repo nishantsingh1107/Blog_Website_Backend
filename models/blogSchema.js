@@ -5,15 +5,15 @@ const blogSchema = new Schema(
     {
         title: {
             type: String,
-            required: [true, "Blog title is required"],
+            required: true,
         },
         content: {
             type: String,
-            required: [true, "Blog content is required"],
+            required: true,
         },
         author: {
             type: Schema.Types.ObjectId,
-            ref: "User", // Or another model name if different
+            ref: "User",
             required: true,
         },
     },

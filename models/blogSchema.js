@@ -17,7 +17,9 @@ const blogSchema = new Schema(
             required: true,
         },
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 );
 
 const BlogModel = model("Blog", blogSchema);

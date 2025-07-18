@@ -32,7 +32,7 @@ const createBlog = async (req, res) => {
 
 const getMyBlogs = async (req, res) => {
     try {
-        const userId = req.user?._id;
+        const userId = req.user._id;
         if (!userId) {
             return res.status(401).json({
                 isSuccess: false,
@@ -40,7 +40,11 @@ const getMyBlogs = async (req, res) => {
                 data: {},
             });
         }
-        const blogs = await BlogModel.find({ author: userId }).sort({ createdAt: -1 });
+        const blogs = await BlogModel.find({
+            author: userId
+        }).sort({
+            createdAt: -1
+        });
         return res.status(200).json({
             isSuccess: true,
             message: "Blogs fetched successfully!",
@@ -51,18 +55,18 @@ const getMyBlogs = async (req, res) => {
     }
 };
 
-const getAllBlogs = async (req, res) => {
-    try {
-        const blogs = await BlogModel.find({}).populate("author", "name email").sort({ createdAt: -1 });
+// const getAllBlogs = async (req, res) => {
+//     try {
+//         const blogs = await BlogModel.find({}).populate("author", "email").sort({ createdAt: -1 });
 
-        return res.status(200).json({
-            isSuccess: true,
-            message: "All blogs fetched successfully!",
-            data: { blogs }
-        });
-    } catch (error) {
-        handleGenericAPIError("getAllBlogs", req, res, error);
-    }
-};
+//         return res.status(200).json({
+//             isSuccess: true,
+//             message: "All blogs fetched successfully!",
+//             data: { blogs }
+//         });
+//     } catch (error) {
+//         handleGenericAPIError("getAllBlogs", req, res, error);
+//     }
+// };
 
-module.exports = { createBlog, getMyBlogs, getAllBlogs };
+module.exports = { createBlog, getMyBlogs };

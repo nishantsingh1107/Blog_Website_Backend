@@ -3,7 +3,7 @@ const { handleGenericAPIError } = require("../../../utils/controllerHelpers");
 
 const getAllBlogs = async (req, res) => {
     try {
-        const blogs = await BlogModel.find({}).populate("author", "email").sort({ createdAt: -1 });
+        const blogs = await BlogModel.find({}).populate("author", "name email").sort({ createdAt: -1 });
 
         return res.status(200).json({
             isSuccess: true,

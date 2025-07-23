@@ -10,9 +10,8 @@ const apiRouter = express.Router();
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/all-blogs", allBlogsRouter);
 
-apiRouter.use(userAuthenticationMiddleware); // authentication
+apiRouter.use(userAuthenticationMiddleware);
 
-// all the routes below this middleware are now (protected APIs)
 
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/blogs", blogsRouter);

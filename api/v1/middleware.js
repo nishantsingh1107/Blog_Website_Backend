@@ -1,7 +1,8 @@
 const { handleGenericAPIError } = require("../../utils/controllerHelpers");
 const jwt = require("jsonwebtoken");
+const { UserModel } = require("../../models/userSchema");
 
-const userAuthenticationMiddleware = (req, res, next) => {
+const userAuthenticationMiddleware = async (req, res, next) => {
     console.log("--> inside userAuthenticationMiddleware");
     try {
         const { authorization } = req.cookies;
@@ -9,7 +10,7 @@ const userAuthenticationMiddleware = (req, res, next) => {
         if (!authorization) {
             return res.status(401).json({ isSuccess: false, message: "Token not found!" });
         }
-        jwt.verify(authorization, process.env.JWT_SECRET, function (err, decodedData) {
+        jwt.verify(authorization, process.env.JWT_SECRET, async function (err, decodedData) {
             if (err) {
                 return res.status(401).json({
                     isSuccess: false,
@@ -17,7 +18,11 @@ const userAuthenticationMiddleware = (req, res, next) => {
                     data: {},
                 });
             } else {
-                req.user = decodedData;
+                const user = await UserModel.findById(decodedData._id);
+                if (!user) {
+                    return res.status(401).json({ isSuccess: false, message: "User not found!" });
+                }
+                req.user = user;
                 next();
             }
         });

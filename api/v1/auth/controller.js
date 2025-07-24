@@ -10,7 +10,7 @@ const nanoid = customAlphabet("1234567890", 6);
 const userSignupController = async (req, res) => {
     console.log("--> inside userSignupController");
     try {
-        const { email, password, otp } = req.body;
+        const { email, password, otp, name, gender } = req.body;
         const user = await UserModel.findOne({
             email: email,
         }).lean();
@@ -38,7 +38,7 @@ const userSignupController = async (req, res) => {
             return;
         }
 
-        await UserModel.create({ email, password });
+        await UserModel.create({ email, password, name, gender });
 
         res.status(201).json({
             isSuccess: true,
